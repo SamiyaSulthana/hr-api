@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                echo "${params.ParamaterizedExecution}"
-             git branch: 'main', credentialsId: 'GitKey', url: 'https://github.com/SamiyaSulthana/hr-api'
+//                 echo "${params.ParamaterizedExecution}"
+             git branch: "${params.ParamaterizedExecution}", credentialsId: 'GitKey', url: 'https://github.com/SamiyaSulthana/hr-api'
             }
         }
         stage('Maven Build') {
