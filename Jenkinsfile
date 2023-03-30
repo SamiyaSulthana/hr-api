@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                echo "${params.ParameterizedExecution}"
+                echo "${params}"
              git branch: 'main', credentialsId: 'GitKey', url: 'https://github.com/SamiyaSulthana/hr-api'
             }
         }
