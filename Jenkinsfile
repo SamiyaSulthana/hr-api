@@ -4,22 +4,12 @@ pipeline {
 
     stages {
         stage('Git Checkout') {
-//             when{
-//                 expression{
-//                     params.ParamaterizedExecution == "develop"
-//                 }
-//             }
             steps {
-//                 echo "${params.ParamaterizedExecution}"
+             echo "${params.ParamaterizedExecution}"
              git branch: "${params.ParamaterizedExecution}", credentialsId: 'GitKey', url: 'https://github.com/SamiyaSulthana/hr-api'
             }
         }
         stage('Maven Build') {
-//            when{
-//                 expression{
-//                     params.ParamaterizedExecution == "develop"
-//                 }
-//             }
             steps {
              sh 'mvn clean package'
             }
