@@ -1,22 +1,25 @@
-@Library('jhc') _
 pipeline {
-    agent any    
+    agent any
+
     stages {
         stage('Git Checkout') {
             steps {
-             echo "${params.ParamaterizedExecution}"
-             git branch: "${params.ParamaterizedExecution}", credentialsId: 'GitKey', url: 'https://github.com/SamiyaSulthana/hr-api'
+                git branch: 'main', credentialsId: 'github-tokens', url: 'https://github.com/SamiyaSulthana/hr-api'
             }
         }
         stage('Maven Build') {
             steps {
-             sh 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
-         stage('Tomcat Deploy Dev') {
+         stage('Tomcat Deploy') {
             steps {
-             tomcatdeploy("ec2-user","172.31.1.21")
-             }
+                sshagent(['ssh-agent']) {
+                sh "scp -o StrictHostKeyChecking=no target/hr-api.war ec2-user@172.31.34.221:/opt/tomcat9/webapps"
+                sh "ssh ec2-user@172.31.34.221 /opt/tomcat9/bin/shutdown.sh"
+                sh "ssh ec2-user@172.31.34.221 /opt/tomcat9/bin/startup.sh"
             }
          }
+    }
+    }
 }
