@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Git checkout'){
             steps{
-            git branch: '${params.branchName}', credentialsId: 'github-tokens', url: 'https://github.com/SamiyaSulthana/hr-api'
+            git branch: "${params.branchName}", credentialsId: 'github-tokens', url: 'https://github.com/SamiyaSulthana/hr-api'
         }
         }
         stage('Maven Build') {
